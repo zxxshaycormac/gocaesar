@@ -7,7 +7,7 @@ go实现的凯撒加解密
 
 加密
 
-```
+```go
 text := "abcd1234"
 nStep := 9
 lStep := 25
@@ -16,9 +16,19 @@ fmt.Printf("原文 : %s, 数字位移 : %d,字母位移 : %d\n", text, nStep, lS
 fmt.Printf("密文 : %s", result)
 ```
 
+字母和数字位移位数相同
+
+```go
+text := "abcd1234"
+step := 9
+result := NewCaesar().Input(text).Step(step).BeCaesar()
+fmt.Printf("原文 : %s, 位移 : %d\n", text, step)
+fmt.Printf("密文 : %s", result)
+```
+
 解密
 
-```
+```go
 text := "zabc0123"
 nStep := 9
 lStep := 25
