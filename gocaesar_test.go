@@ -1,6 +1,8 @@
 package gocaesar
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestBeCaesar(t *testing.T) {
 	text := "abcd1234"

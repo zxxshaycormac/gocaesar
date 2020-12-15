@@ -2,7 +2,7 @@ package gocaesar
 
 import (
 	"fmt"
-	"shay/gocaesar/pkg/define"
+	"github.com/zxxshaycormac/gocaesar/pkg/define"
 	"strconv"
 )
 
