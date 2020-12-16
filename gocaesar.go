@@ -3,7 +3,7 @@ package gocaesar
 import (
 	"fmt"
 	"github.com/zxxshaycormac/gocaesar/pkg/define"
-	"shay/gocaesar/pkg/codec/base64"
+	"github.com/zxxshaycormac/gocaesar/pkg/codec/base64"
 	"strconv"
 	"time"
 )
