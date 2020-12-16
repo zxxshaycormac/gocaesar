@@ -65,7 +65,7 @@ func (this *Caesar) BeCaesar() string {
 	for _, v := range inputList {
 		if num, err := strconv.Atoi(v); err == nil {
 			newNumber := define.GetNumShift(num, this.numberStep)
-			result = fmt.Sprintf("%s%v", result, newNumber)
+			result = fmt.Sprintf("%s%d", result, newNumber)
 		} else {
 			newLetter := define.GetLetShift(v, this.letterStep)
 			result = fmt.Sprintf("%s%s", result, newLetter)
@@ -84,13 +84,16 @@ func (this *Caesar) BeCaesar() string {
 func (this *Caesar) DeCaesar() string {
 	var result = ""
 	if this.hash {
+		if len(this.input) <= 28 {
+			return ""
+		}
 		this.input = this.deHashBase64()
 	}
 	inputList := splitString(this.input)
 	for _, v := range inputList {
 		if num, err := strconv.Atoi(v); err == nil {
 			newNumber := define.GetDeNumShift(num, this.numberStep)
-			result = fmt.Sprintf("%s%v", result, newNumber)
+			result = fmt.Sprintf("%s%d", result, newNumber)
 		} else {
 			newLetter := define.GetDeLetShift(v, this.letterStep)
 			result = fmt.Sprintf("%s%s", result, newLetter)

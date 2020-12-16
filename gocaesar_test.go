@@ -2,13 +2,13 @@ package gocaesar
 
 import (
 	"fmt"
-	"shay/gocaesar/pkg/codec/base64"
+	"github.com/zxxshaycormac/gocaesar/pkg/codec/base64"
 	"testing"
 	"time"
 )
 
 func TestBeCaesar(t *testing.T) {
-	text := "abcd1234"
+	text := "aBcD1234"
 	nStep := 9
 	lStep := 25
 	result := NewCaesar().Input(text).NumberStep(nStep).LetterStep(lStep).BeCaesar()
@@ -21,14 +21,14 @@ func TestBeCaesar(t *testing.T) {
 }
 
 func TestDeCaesar(t *testing.T) {
-	text := "zabc0123"
+	text := "zAbC0123"
 	nStep := 9
 	lStep := 25
 	result := NewCaesar().Input(text).NumberStep(nStep).LetterStep(lStep).DeCaesar()
 	t.Logf("密文 : %s, 数字位移 : %d,字母位移 : %d", text, nStep, lStep)
 	t.Logf("原文 : %s", result)
 	bit := 26
-	text = "MTYwODA5NjM3NDc5MTE3MzAwMAzabc0123=="
+	text = "MTYwODA5OTU5NDc3NzQxMzMwMAzAbC0123=="
 	result = NewCaesar().Input(text).NumberStep(nStep).LetterStep(lStep).Base64(bit).DeCaesar()
 	t.Logf("密文 : %s, 数字位移 : %d,字母位移 : %d, base64填充下标位置 : %d", text, nStep, lStep, bit)
 	t.Logf("原文 : %s", result)

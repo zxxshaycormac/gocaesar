@@ -1,6 +1,6 @@
 package define
 
-var Lring = map[int]string{
+var lring = map[int]string{
 	0:  "a",
 	1:  "b",
 	2:  "c",
@@ -29,7 +29,7 @@ var Lring = map[int]string{
 	25: "z",
 }
 
-var ReverseLring = map[string]int{
+var reverseLring = map[string]int{
 	"a": 0,
 	"b": 1,
 	"c": 2,
@@ -58,22 +58,100 @@ var ReverseLring = map[string]int{
 	"z": 25,
 }
 
+var capitalLring = map[int]string{
+	0:  "A",
+	1:  "B",
+	2:  "C",
+	3:  "D",
+	4:  "E",
+	5:  "F",
+	6:  "G",
+	7:  "H",
+	8:  "I",
+	9:  "J",
+	10: "K",
+	11: "L",
+	12: "M",
+	13: "N",
+	14: "O",
+	15: "P",
+	16: "Q",
+	17: "R",
+	18: "S",
+	19: "T",
+	20: "U",
+	21: "V",
+	22: "W",
+	23: "X",
+	24: "Y",
+	25: "Z",
+}
+
+var capitalReverseLring = map[string]int{
+	"A": 0,
+	"B": 1,
+	"C": 2,
+	"D": 3,
+	"E": 4,
+	"F": 5,
+	"G": 6,
+	"H": 7,
+	"I": 8,
+	"J": 9,
+	"K": 10,
+	"L": 11,
+	"M": 12,
+	"N": 13,
+	"O": 14,
+	"P": 15,
+	"Q": 16,
+	"R": 17,
+	"S": 18,
+	"T": 19,
+	"U": 20,
+	"V": 21,
+	"W": 22,
+	"X": 23,
+	"Y": 24,
+	"Z": 25,
+}
+
 func GetLetShift(let string, step int) string {
-	newLet := ReverseLring[let] + step
-	if newLet > 25 {
-		return Lring[newLet%26]
+	if _, ok := reverseLring[let]; ok {
+		//小写字母
+		return makeShift(reverseLring, lring, let, step)
+	} else {
+		//大写字母
+		return makeShift(capitalReverseLring, capitalLring, let, step)
 	}
-	return Lring[newLet]
+}
+
+func makeShift (reverseRing map[string]int, ring map[int]string, let string, step int) string{
+	newLet := reverseRing[let] + step
+	if newLet > 25 {
+		return ring[newLet%26]
+	}
+	return ring[newLet]
 }
 
 func GetDeLetShift(let string, step int) string {
-	newLet := ReverseLring[let] - step
+	if _, ok := reverseLring[let]; ok {
+		//小写字母
+		return makeDeShift(reverseLring, lring, let, step)
+	} else {
+		//大写字母
+		return makeDeShift(capitalReverseLring, capitalLring, let, step)
+	}
+}
+
+func makeDeShift(reverseRing map[string]int, ring map[int]string, let string, step int) string {
+	newLet := reverseRing[let] - step
 	if newLet < 0 {
 		newLetUnit := newLet % 26
 		if newLetUnit == 0 {
-			return Lring[newLetUnit]
+			return ring[newLetUnit]
 		}
-		return Lring[26+newLetUnit]
+		return ring[26+newLetUnit]
 	}
-	return Lring[newLet]
+	return ring[newLet]
 }
