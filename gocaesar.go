@@ -3,13 +3,18 @@ package gocaesar
 import (
 	"fmt"
 	"github.com/zxxshaycormac/gocaesar/pkg/define"
+	"shay/gocaesar/pkg/codec/base64"
 	"strconv"
+	"time"
 )
 
 type Caesar struct {
 	input      string
 	numberStep int
 	letterStep int
+	hash       bool
+	hashType   string
+	hashBit    int
 }
 
 func NewCaesar() *Caesar {
@@ -40,6 +45,19 @@ func (this *Caesar) Step(step int) *Caesar {
 	return this
 }
 
+func (this *Caesar) Base64(bit int) *Caesar {
+	this.hash = true
+	this.hashType = "base64"
+	if bit > 26 {
+		bit = 26
+	} else if bit < 0 {
+		newBit := bit % 26
+		bit = 26 - newBit
+	}
+	this.hashBit = bit
+	return this
+}
+
 //加密
 func (this *Caesar) BeCaesar() string {
 	var result = ""
@@ -53,12 +71,21 @@ func (this *Caesar) BeCaesar() string {
 			result = fmt.Sprintf("%s%s", result, newLetter)
 		}
 	}
+	if this.hash {
+		switch this.hashType {
+		case "base64":
+			return this.hashBase64(result)
+		}
+	}
 	return result
 }
 
 //解密
 func (this *Caesar) DeCaesar() string {
 	var result = ""
+	if this.hash {
+		this.input = this.deHashBase64()
+	}
 	inputList := splitString(this.input)
 	for _, v := range inputList {
 		if num, err := strconv.Atoi(v); err == nil {
@@ -78,4 +105,17 @@ func splitString(input string) []string {
 		list = append(list, string(v))
 	}
 	return list
+}
+
+func (this *Caesar) hashBase64(input string) string {
+	theBase64 := nowBase64()
+	return fmt.Sprintf("%s%s%s", theBase64[:this.hashBit], input, theBase64[this.hashBit:])
+}
+
+func (this *Caesar) deHashBase64() string {
+	return this.input[this.hashBit : this.hashBit+(len(this.input)-28)]
+}
+
+func nowBase64() string {
+	return base64.Encode2Base64Str([]byte(fmt.Sprintf("%v", time.Now().UnixNano())))
 }
